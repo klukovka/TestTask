@@ -23,8 +23,7 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage>
-    with SingleTickerProviderStateMixin {
+class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   Color _color = Colors.white;
   double _size = 15;
 
@@ -33,8 +32,8 @@ class _MyHomePageState extends State<MyHomePage>
     return GestureDetector(
       onTap: () async {
         if (await Vibration.hasAmplitudeControl()) {
-        Vibration.vibrate(amplitude: _size.toInt()*2);
-}
+          Vibration.vibrate(amplitude: _size.toInt() * 2);
+        }
         setState(() {
           var rand = new Random();
           _color = Color.fromARGB(
@@ -48,15 +47,26 @@ class _MyHomePageState extends State<MyHomePage>
       },
       child: Scaffold(
         body: Container(
-          color: _color,
           alignment: Alignment.center,
-          child: AnimatedSize(
-            duration: Duration(milliseconds: 700),
-            vsync: this,
-            curve: Curves.fastLinearToSlowEaseIn,
-            child: Text(
-              'Hey there',
-              style: TextStyle(fontSize: _size, fontWeight: FontWeight.bold),
+          child: AnimatedContainer(
+            height: MediaQuery.of(context).size.height,
+            width: MediaQuery.of(context).size.width,
+            decoration: BoxDecoration(
+              color: _color,
+            ),
+            duration: Duration(milliseconds: 500),
+            curve: Curves.fastOutSlowIn,
+            child: Center(
+              child: AnimatedSize(
+                duration: Duration(milliseconds: 700),
+                vsync: this,
+                curve: Curves.fastLinearToSlowEaseIn,
+                child: Text(
+                  'Hey there',
+                  style:
+                      TextStyle(fontSize: _size, fontWeight: FontWeight.bold),
+                ),
+              ),
             ),
           ),
         ),
