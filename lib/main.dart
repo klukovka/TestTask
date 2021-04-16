@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
+import 'package:vibration/vibration.dart';
 
 void main() {
   runApp(MyApp());
@@ -30,7 +31,10 @@ class _MyHomePageState extends State<MyHomePage>
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
+      onTap: () async {
+        if (await Vibration.hasAmplitudeControl()) {
+        Vibration.vibrate(amplitude: _size.toInt()*2);
+}
         setState(() {
           var rand = new Random();
           _color = Color.fromARGB(
